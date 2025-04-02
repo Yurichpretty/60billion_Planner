@@ -1,747 +1,310 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UXUI 디자이너 & 자산가 90일 플래너</title>
-    <style>
-        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
-        
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Pretendard', -apple-system, sans-serif;
-        }
-        
-        body {
-            background-color: #f8f9fa;
-            color: #343a40;
-            line-height: 1.6;
-        }
-        
-        .planner-container {
-            max-width: 800px;
-            margin: 20px auto;
-            background: white;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            border-radius: 20px;
-            overflow: hidden;
-        }
-        
-        .planner-header {
-            background: linear-gradient(135deg, #4158D0, #C850C0);
-            color: white;
-            padding: 30px;
-            text-align: center;
-            position: relative;
-        }
-        
-        .planner-title {
-            font-weight: 700;
-            font-size: 28px;
-            margin-bottom: 5px;
-        }
-        
-        .planner-subtitle {
-            font-weight: 300;
-            opacity: 0.9;
-            font-size: 16px;
-        }
-        
-        .planner-section {
-            padding: 25px 35px;
-            border-bottom: 1px solid #e9ecef;
-        }
-        
-        .section-title {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-            font-size: 18px;
-            font-weight: 600;
-            color: #495057;
-        }
-        
-        .section-title:before {
-            content: '';
-            display: inline-block;
-            width: 12px;
-            height: 12px;
-            background: linear-gradient(135deg, #4158D0, #C850C0);
-            margin-right: 10px;
-            border-radius: 50%;
-        }
-        
-        .date-input {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        
-        .date-box {
-            padding: 10px 15px;
-            background: #f1f3f5;
-            border-radius: 10px;
-            text-align: center;
-            min-width: 65px;
-        }
-        
-        .top-goals {
-            margin-bottom: 25px;
-        }
-        
-        .goal-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-            padding: 12px 15px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            border-left: 4px solid #4158D0;
-            transition: all 0.2s ease;
-        }
-        
-        .goal-item:hover {
-            transform: translateX(5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-        
-        .goal-number {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 28px;
-            height: 28px;
-            background: #4158D0;
-            color: white;
-            border-radius: 50%;
-            margin-right: 15px;
-            font-size: 14px;
-            font-weight: 500;
-        }
-        
-        .goal-input {
-            flex-grow: 1;
-            border: none;
-            background: transparent;
-            padding: 5px;
-            outline: none;
-            font-size: 16px;
-        }
-        
-        .habit-tracker {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-bottom: 25px;
-        }
-        
-        .habit-item {
-            display: flex;
-            align-items: center;
-            padding: 12px 15px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            transition: all 0.2s ease;
-        }
-        
-        .habit-item:hover {
-            background: #f1f3f5;
-        }
-        
-        .habit-checkbox {
-            appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            width: 22px;
-            height: 22px;
-            border: 2px solid #dee2e6;
-            border-radius: 6px;
-            margin-right: 15px;
-            position: relative;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        .habit-checkbox:checked {
-            background: #4158D0;
-            border-color: #4158D0;
-        }
-        
-        .habit-checkbox:checked:after {
-            content: '✓';
-            position: absolute;
-            color: white;
-            font-size: 14px;
-            left: 4px;
-            top: -3px;
-        }
-        
-        .habit-label {
-            font-weight: 500;
-            flex-grow: 1;
-        }
-        
-        .habit-note {
-            flex-grow: 1;
-            border: none;
-            background: transparent;
-            border-bottom: 1px dashed #dee2e6;
-            padding: 5px;
-            margin-left: 10px;
-            outline: none;
-            font-size: 14px;
-        }
-        
-        .activity-group {
-            margin-bottom: 25px;
-        }
-        
-        .activity-item {
-            display: flex;
-            align-items: center;
-            padding: 12px 15px;
-            margin-bottom: 10px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            transition: all 0.2s ease;
-        }
-        
-        .activity-item:hover {
-            background: #f1f3f5;
-        }
-        
-        .activity-checkbox {
-            appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            width: 22px;
-            height: 22px;
-            border: 2px solid #dee2e6;
-            border-radius: 6px;
-            margin-right: 15px;
-            position: relative;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        .activity-checkbox:checked {
-            background: #4158D0;
-            border-color: #4158D0;
-        }
-        
-        .activity-checkbox:checked:after {
-            content: '✓';
-            position: absolute;
-            color: white;
-            font-size: 14px;
-            left: 4px;
-            top: -3px;
-        }
-        
-        .activity-details {
-            display: flex;
-            flex-grow: 1;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .activity-label {
-            font-weight: 500;
-        }
-        
-        .activity-time {
-            display: flex;
-            align-items: center;
-            background: white;
-            border: 1px solid #dee2e6;
-            border-radius: 6px;
-            padding: 3px 8px;
-            font-size: 12px;
-            margin-left: 10px;
-        }
-        
-        .activity-time span {
-            margin-left: 3px;
-        }
-        
-        .activity-note {
-            flex-grow: 1;
-            border: none;
-            background: transparent;
-            border-bottom: 1px dashed #dee2e6;
-            padding: 5px;
-            margin-left: 10px;
-            outline: none;
-            font-size: 14px;
-        }
-        
-        .reflection-area {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        
-        .reflection-item {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .reflection-label {
-            font-weight: 500;
-            margin-bottom: 8px;
-            color: #495057;
-        }
-        
-        .reflection-input {
-            border: 1px solid #dee2e6;
-            border-radius: 10px;
-            padding: 12px;
-            font-size: 14px;
-            min-height: 60px;
-            outline: none;
-            resize: none;
-            transition: all 0.2s;
-        }
-        
-        .reflection-input:focus {
-            border-color: #4158D0;
-            box-shadow: 0 0 0 3px rgba(65, 88, 208, 0.1);
-        }
-        
-        .progress-tracker {
-            margin-top: 20px;
-        }
-        
-        .progress-title {
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: #495057;
-        }
-        
-        .progress-bar-container {
-            height: 20px;
-            background: #e9ecef;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-bottom: 5px;
-        }
-        
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(135deg, #4158D0, #C850C0);
-            width: 25%;
-        }
-        
-        .progress-labels {
-            display: flex;
-            justify-content: space-between;
-            font-size: 12px;
-            color: #6c757d;
-        }
-        
-        .weekly-review {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 20px;
-            margin-top: 30px;
-            border-left: 4px solid #C850C0;
-        }
-        
-        .weekly-review-title {
-            font-weight: 600;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            color: #C850C0;
-        }
-        
-        .weekly-review-title:before {
-            content: '📊';
-            margin-right: 8px;
-        }
-        
-        .weekly-input {
-            border: 1px solid #dee2e6;
-            border-radius: 10px;
-            padding: 12px;
-            font-size: 14px;
-            width: 100%;
-            min-height: 60px;
-            outline: none;
-            resize: none;
-            margin-bottom: 15px;
-            transition: all 0.2s;
-        }
-        
-        .weekly-input:focus {
-            border-color: #C850C0;
-            box-shadow: 0 0 0 3px rgba(200, 80, 192, 0.1);
-        }
-        
-        .project-tracker {
-            background: linear-gradient(135deg, #4158D0, #C850C0);
-            border-radius: 15px;
-            padding: 20px;
-            color: white;
-            margin-top: 30px;
-        }
-        
-        .project-tracker-title {
-            font-weight: 600;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .project-tracker-title:before {
-            content: '📈';
-            margin-right: 8px;
-        }
-        
-        .project-item {
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 15px;
-        }
-        
-        .project-name {
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-        
-        .project-date {
-            display: flex;
-            justify-content: space-between;
-            font-size: 14px;
-            opacity: 0.9;
-            margin-bottom: 10px;
-        }
-        
-        .project-progress {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-        
-        .progress-stage {
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 15px;
-            padding: 5px 10px;
-            font-size: 12px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        .progress-stage.active {
-            background: white;
-            color: #4158D0;
-            font-weight: 500;
-        }
-        
-        .project-notes {
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            border-radius: 8px;
-            color: white;
-            padding: 8px;
-            width: 100%;
-            font-size: 14px;
-            outline: none;
-        }
-        
-        .project-notes::placeholder {
-            color: rgba(255, 255, 255, 0.7);
-        }
-        
-        .footer {
-            text-align: center;
-            padding: 30px;
-            font-size: 14px;
-            color: #6c757d;
-        }
-        
-        .footer span {
-            color: #C850C0;
-            font-weight: 600;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UXUI 디자이너 & 자산가 90일 플래너</title>
+  <style>
+    @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Pretendard', -apple-system, sans-serif;
+    }
+
+    body {
+      background-color: #f8f9fa;
+      color: #343a40;
+      line-height: 1.6;
+    }
+
+    .planner-container {
+      max-width: 800px;
+      margin: 20px auto;
+      background: white;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .planner-header {
+      background: linear-gradient(135deg, #4158D0, #C850C0);
+      color: white;
+      padding: 30px;
+      text-align: center;
+      position: relative;
+    }
+
+    .planner-title {
+      font-weight: 700;
+      font-size: 28px;
+      margin-bottom: 5px;
+    }
+
+    .planner-subtitle {
+      font-weight: 300;
+      opacity: 0.9;
+      font-size: 16px;
+    }
+
+    .planner-section {
+      padding: 25px 35px;
+      border-bottom: 1px solid #e9ecef;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      font-size: 18px;
+      font-weight: 600;
+      color: #495057;
+    }
+
+    .section-title:before {
+      content: '';
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      background: linear-gradient(135deg, #4158D0, #C850C0);
+      margin-right: 10px;
+      border-radius: 50%;
+    }
+
+    .date-input {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .date-box {
+      padding: 10px 15px;
+      background: #f1f3f5;
+      border-radius: 10px;
+      text-align: center;
+      min-width: 65px;
+    }
+
+    .date-box input {
+      border: 1px solid #ced4da;
+      background: white;
+      text-align: center;
+      width: 100%;
+      font-size: 16px;
+      padding: 5px;
+      border-radius: 6px;
+    }
+
+    .top-goals {
+      margin-bottom: 25px;
+    }
+
+    .goal-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+      padding: 12px 15px;
+      background: #f8f9fa;
+      border-radius: 10px;
+      border-left: 4px solid #4158D0;
+      transition: all 0.2s ease;
+    }
+
+    .goal-item:hover {
+      transform: translateX(5px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+
+    .goal-number {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 28px;
+      height: 28px;
+      background: #4158D0;
+      color: white;
+      border-radius: 50%;
+      margin-right: 15px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .goal-input {
+      flex-grow: 1;
+      border: none;
+      background: transparent;
+      padding: 5px;
+      outline: none;
+      font-size: 16px;
+    }
+
+    .habit-tracker {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 25px;
+    }
+
+    .habit-item {
+      display: flex;
+      align-items: center;
+      padding: 12px 15px;
+      background: #f8f9fa;
+      border-radius: 10px;
+      transition: all 0.2s ease;
+    }
+
+    .habit-item:hover {
+      background: #f1f3f5;
+    }
+
+    .habit-checkbox {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      width: 22px;
+      height: 22px;
+      border: 2px solid #dee2e6;
+      border-radius: 6px;
+      margin-right: 15px;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .habit-checkbox:checked {
+      background: #4158D0;
+      border-color: #4158D0;
+    }
+
+    .habit-checkbox:checked:after {
+      content: '✓';
+      position: absolute;
+      color: white;
+      font-size: 14px;
+      left: 4px;
+      top: -3px;
+    }
+
+    .habit-label {
+      font-weight: 500;
+      flex-grow: 1;
+    }
+
+    .habit-note {
+      flex-grow: 1;
+      border: none;
+      background: transparent;
+      border-bottom: 1px dashed #dee2e6;
+      padding: 5px;
+      margin-left: 10px;
+      outline: none;
+      font-size: 14px;
+    }
+  </style>
 </head>
 <body>
-    <div class="planner-container">
-        <div class="planner-header">
-            <h1 class="planner-title">UXUI 디자이너 & 자산가 90일 플래너</h1>
-            <p class="planner-subtitle">꿈을 현실로 만드는 일일 실천 시스템</p>
+  <div class="planner-container">
+    <div class="planner-header">
+      <h1 class="planner-title">UXUI 디자이너 & 자산가 90일 플래너</h1>
+      <p class="planner-subtitle">꿈을 현실로 만드는 일일 실천 시스템</p>
+    </div>
+
+    <div class="planner-section">
+      <div class="date-input">
+        <div class="date-box">
+          <span style="font-size: 12px; color: #6c757d;">날짜</span>
+          <input type="text" placeholder="04/02">
         </div>
-        
-        <div class="date-input">
-  <div class="date-box">
-    <span style="font-size: 12px; color: #6c757d;">날짜</span>
-    <input type="text" placeholder="04/02" style="border: 1px solid #ced4da; background: white; text-align: center; width: 100%; font-size: 16px; padding: 5px; border-radius: 6px;">
+        <div class="date-box">
+          <span style="font-size: 12px; color: #6c757d;">요일</span>
+          <input type="text" placeholder="수">
+        </div>
+        <div class="date-box" style="flex-grow: 1;">
+          <span style="font-size: 12px; color: #6c757d;">90일 중</span>
+          <input type="text" placeholder="1일차">
+        </div>
+      </div>
+
+      <h2 class="section-title">오늘의 핵심 목표</h2>
+      <div class="top-goals">
+        <div class="goal-item">
+          <div class="goal-number">1</div>
+          <input type="text" class="goal-input" placeholder="오늘의 가장 중요한 목표를 입력하세요">
+        </div>
+        <div class="goal-item">
+          <div class="goal-number">2</div>
+          <input type="text" class="goal-input" placeholder="두 번째로 중요한 목표를 입력하세요">
+        </div>
+        <div class="goal-item">
+          <div class="goal-number">3</div>
+          <input type="text" class="goal-input" placeholder="세 번째로 중요한 목표를 입력하세요">
+        </div>
+      </div>
+
+      <h2 class="section-title">일일 필수 습관</h2>
+      <div class="habit-tracker">
+        <div class="habit-item">
+          <input type="checkbox" class="habit-checkbox" id="habit1">
+          <label class="habit-label" for="habit1">아침 신문 읽기 <span style="font-size: 12px; color: #868e96;">(경영자 마인드)</span></label>
+          <input type="text" class="habit-note" placeholder="주요 내용 메모">
+        </div>
+        <div class="habit-item">
+          <input type="checkbox" class="habit-checkbox" id="habit2">
+          <label class="habit-label" for="habit2">영어 공부 (1시간) <span style="font-size: 12px; color: #868e96;">(글로벌 UX 디자이너)</span></label>
+          <input type="text" class="habit-note" placeholder="학습 내용 메모">
+        </div>
+        <div class="habit-item">
+          <input type="checkbox" class="habit-checkbox" id="habit3">
+          <label class="habit-label" for="habit3">피그마 실습 (1시간) <span style="font-size: 12px; color: #868e96;">(포트폴리오 강화)</span></label>
+          <input type="text" class="habit-note" placeholder="연습 내용 메모">
+        </div>
+      </div>
+    </div>
+
+    <div class="planner-section">
+      <h2 class="section-title">UXUI 디자이너 성장 활동</h2>
+      <div class="activity-group">
+        <div class="activity-item">
+          <input type="checkbox" class="activity-checkbox" id="project1">
+          <div class="activity-details">
+            <label class="activity-label" for="project1">돈버는 디자이너 되기 프로젝트 1</label>
+            <div class="activity-time">
+              <input type="text" placeholder="60" style="width: 30px; border: none; background: transparent; outline: none; text-align: right;">
+              <span>분</span>
+            </div>
+          </div>
+        </div>
+        <input type="text" class="activity-note" placeholder="작업 내용">
+
+        <div class="activity-item">
+          <input type="checkbox" class="activity-checkbox" id="project2">
+          <div class="activity-details">
+            <label class="activity-label" for="project2">돈버는 디자이너 되기 프로젝트 2</label>
+            <div class="activity-time">
+              <input type="text" placeholder="60" style="width: 30px; border: none; background: transparent; outline: none; text-align: right;">
+              <span>분</span>
+            </div>
+          </div>
+        </div>
+        <input type="text" class="activity-note" placeholder="작업 내용">
+
+        <div class="activity-item">
+          <input type="checkbox" class="activity-checkbox" id="project3">
+          <div class="activity-details">
+            <label class="activity-label" for="project3">피그마 연습용 프로젝트</label>
+            <div class="activity-time">
+              <input type="text" placeholder="60" style="width: 30px; border: none; background: transparent; outline: none; text-align: right;">
+              <span>분</span>
+            </div>
+          </div>
+        </div>
+        <input type="text" class="activity-note" placeholder="작업 내용">
+      </div>
+    </div>
   </div>
-  <div class="date-box">
-    <span style="font-size: 12px; color: #6c757d;">요일</span>
-    <input type="text" placeholder="수" style="border: 1px solid #ced4da; background: white; text-align: center; width: 100%; font-size: 16px; padding: 5px; border-radius: 6px;">
-  </div>
-  <div class="date-box" style="flex-grow: 1;">
-    <span style="font-size: 12px; color: #6c757d;">90일 중</span>
-    <input type="text" placeholder="1일차" style="border: 1px solid #ced4da; background: white; text-align: center; width: 100%; font-size: 16px; padding: 5px; border-radius: 6px;">
-  </div>
-</div>
-         
-            
-            <h2 class="section-title">오늘의 핵심 목표</h2>
-            <div class="top-goals">
-                <div class="goal-item">
-                    <div class="goal-number">1</div>
-                    <input type="text" class="goal-input" placeholder="오늘의 가장 중요한 목표를 입력하세요">
-                </div>
-                <div class="goal-item">
-                    <div class="goal-number">2</div>
-                    <input type="text" class="goal-input" placeholder="두 번째로 중요한 목표를 입력하세요">
-                </div>
-                <div class="goal-item">
-                    <div class="goal-number">3</div>
-                    <input type="text" class="goal-input" placeholder="세 번째로 중요한 목표를 입력하세요">
-                </div>
-            </div>
-            
-            <h2 class="section-title">일일 필수 습관</h2>
-            <div class="habit-tracker">
-                <div class="habit-item">
-                    <input type="checkbox" class="habit-checkbox" id="habit1">
-                    <label class="habit-label" for="habit1">아침 신문 읽기 (30분)</label>
-                    <input type="text" class="habit-note" placeholder="주요 내용 메모">
-                </div>
-                <div class="habit-item">
-                    <input type="checkbox" class="habit-checkbox" id="habit2">
-                    <label class="habit-label" for="habit2">영어 공부 (1시간)</label>
-                    <input type="text" class="habit-note" placeholder="학습 내용 메모">
-                </div>
-                <div class="habit-item">
-                    <input type="checkbox" class="habit-checkbox" id="habit3">
-                    <label class="habit-label" for="habit3">피그마 실습 (1시간)</label>
-                    <input type="text" class="habit-note" placeholder="연습 내용 메모">
-                </div>
-            </div>
-        </div>
-        
-        <div class="planner-section">
-            <h2 class="section-title">UXUI 디자이너 성장 활동</h2>
-            <div class="activity-group">
-                <div class="activity-item">
-                    <input type="checkbox" class="activity-checkbox" id="activity1">
-                    <div class="activity-details">
-                        <label class="activity-label" for="activity1">포트폴리오 작업</label>
-                        <div class="activity-time">
-                            <input type="text" placeholder="60" style="width: 30px; border: none; background: transparent; outline: none; text-align: right;">
-                            <span>분</span>
-                        </div>
-                    </div>
-                </div>
-                <input type="text" class="activity-note" placeholder="작업 내용">
-                
-                <div class="activity-item">
-                    <input type="checkbox" class="activity-checkbox" id="activity2">
-                    <div class="activity-details">
-                        <label class="activity-label" for="activity2">디자인 스터디/강의</label>
-                        <div class="activity-time">
-                            <input type="text" placeholder="45" style="width: 30px; border: none; background: transparent; outline: none; text-align: right;">
-                            <span>분</span>
-                        </div>
-                    </div>
-                </div>
-                <input type="text" class="activity-note" placeholder="학습 내용">
-                
-                <div class="activity-item">
-                    <input type="checkbox" class="activity-checkbox" id="activity3">
-                    <div class="activity-details">
-                        <label class="activity-label" for="activity3">프로젝트 작업</label>
-                        <div class="activity-time">
-                            <input type="text" placeholder="120" style="width: 30px; border: none; background: transparent; outline: none; text-align: right;">
-                            <span>분</span>
-                        </div>
-                    </div>
-                </div>
-                <input type="text" class="activity-note" placeholder="프로젝트명">
-                <input type="text" class="activity-note" placeholder="오늘의 목표">
-                <input type="text" class="activity-note" placeholder="결과물">
-            </div>
-            
-            <h2 class="section-title">경영자적 마인드 개발</h2>
-            <div class="activity-group">
-                <div class="activity-item">
-                    <input type="checkbox" class="activity-checkbox" id="activity4">
-                    <div class="activity-details">
-                        <label class="activity-label" for="activity4">트렌드/시장 분석</label>
-                        <div class="activity-time">
-                            <input type="text" placeholder="30" style="width: 30px; border: none; background: transparent; outline: none; text-align: right;">
-                            <span>분</span>
-                        </div>
-                    </div>
-                </div>
-                <input type="text" class="activity-note" placeholder="인사이트">
-                
-                <div class="activity-item">
-                    <input type="checkbox" class="activity-checkbox" id="activity5">
-                    <div class="activity-details">
-                        <label class="activity-label" for="activity5">사용자 니즈 탐색</label>
-                        <div class="activity-time">
-                            <input type="text" placeholder="30" style="width: 30px; border: none; background: transparent; outline: none; text-align: right;">
-                            <span>분</span>
-                        </div>
-                    </div>
-                </div>
-                <input type="text" class="activity-note" placeholder="발견한 니즈">
-                
-                <div class="activity-item">
-                    <input type="checkbox" class="activity-checkbox" id="activity6">
-                    <div class="activity-details">
-                        <label class="activity-label" for="activity6">비즈니스 모델 연구</label>
-                        <div class="activity-time">
-                            <input type="text" placeholder="30" style="width: 30px; border: none; background: transparent; outline: none; text-align: right;">
-                            <span>분</span>
-                        </div>
-                    </div>
-                </div>
-                <input type="text" class="activity-note" placeholder="학습 내용">
-            </div>
-            
-            <h2 class="section-title">자산 증식 활동</h2>
-            <div class="activity-group">
-                <div class="activity-item">
-                    <input type="checkbox" class="activity-checkbox" id="activity7">
-                    <div class="activity-details">
-                        <label class="activity-label" for="activity7">투자 공부/분석</label>
-                        <div class="activity-time">
-                            <input type="text" placeholder="30" style="width: 30px; border: none; background: transparent; outline: none; text-align: right;">
-                            <span>분</span>
-                        </div>
-                    </div>
-                </div>
-                <input type="text" class="activity-note" placeholder="학습 내용">
-                
-                <div class="activity-item">
-                    <input type="checkbox" class="activity-checkbox" id="activity8">
-                    <div class="activity-details">
-                        <label class="activity-label" for="activity8">투자 활동</label>
-                        <div class="activity-time">
-                            <input type="text" placeholder="15" style="width: 30px; border: none; background: transparent; outline: none; text-align: right;">
-                            <span>분</span>
-                        </div>
-                    </div>
-                </div>
-                <input type="text" class="activity-note" placeholder="활동 내용">
-                
-                <div style="display: flex; gap: 10px; margin-top: 10px;">
-                    <div style="flex: 1; background: #f8f9fa; border-radius: 10px; padding: 12px;">
-                        <div style="font-size: 12px; color: #6c757d; margin-bottom: 5px;">현재 투자금액</div>
-                        <input type="text" placeholder="10만원" style="border: none; background: transparent; font-size: 16px; font-weight: 600; outline: none; width: 100%;">
-                    </div>
-                    <div style="flex: 1; background: #f8f9fa; border-radius: 10px; padding: 12px;">
-                        <div style="font-size: 12px; color: #6c757d; margin-bottom: 5px;">오늘의 변동</div>
-                        <input type="text" placeholder="+2,000원" style="border: none; background: transparent; font-size: 16px; font-weight: 600; color: #40c057; outline: none; width: 100%;">
-                    </div>
-                </div>
-                
-                <div class="progress-tracker">
-                    <div class="progress-title">목표 달성률 (10만원 → 100만원)</div>
-                    <div class="progress-bar-container">
-                        <div class="progress-bar"></div>
-                    </div>
-                    <div class="progress-labels">
-                        <span>10만원</span>
-                        <span>25만원</span>
-                        <span>50만원</span>
-                        <span>75만원</span>
-                        <span>100만원</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="planner-section">
-            <h2 class="section-title">오늘의 회고</h2>
-            <div class="reflection-area">
-                <div class="reflection-item">
-                    <label class="reflection-label">오늘의 성공</label>
-                    <textarea class="reflection-input" placeholder="오늘 성공적으로 완료한 일은 무엇인가요?"></textarea>
-                </div>
-                <div class="reflection-item">
-                    <label class="reflection-label">개선이 필요한 부분</label>
-                    <textarea class="reflection-input" placeholder="개선하거나 발전시키고 싶은 부분은 무엇인가요?"></textarea>
-                </div>
-                <div class="reflection-item">
-                    <label class="reflection-label">내일 집중할 부분</label>
-                    <textarea class="reflection-input" placeholder="내일은 어떤 부분에 집중할 계획인가요?"></textarea>
-                </div>
-                <div class="reflection-item">
-                    <label class="reflection-label">배운 인사이트</label>
-                    <textarea class="reflection-input" placeholder="오늘 새롭게 배운 것이나 중요한 인사이트가 있나요?"></textarea>
-                </div>
-            </div>
-            
-            <div class="weekly-review">
-                <h3 class="weekly-review-title">주간 리뷰 (일요일)</h3>
-                <div style="font-size: 14px; margin-bottom: 15px; color: #6c757d;">이번 주의 성과와 다음 주 계획을 정리하세요.</div>
-                
-                <label class="reflection-label">주간 성과 요약</label>
-                <textarea class="weekly-input" placeholder="UXUI 디자이너 성장, 경영자적 마인드 개발, 자산 증식, 프로젝트 진행 상황"></textarea>
-                
-                <label class="reflection-label">다음 주 우선순위 목표 3가지</label>
-                <textarea class="weekly-input" placeholder="1. &#10;2. &#10;3."></textarea>
-            </div>
-        </div>
-        
-        <div class="planner-section">
-            <div class="project-tracker">
-                <h3 class="project-tracker-title">프로젝트 진행 현황</h3>
-                
-                <div class="project-item">
-                    <div class="project-name">피그마 연습용 프로젝트</div>
-                    <div class="project-date">
-                        <span>시작일: <input type="text" placeholder="MM/DD" style="width: 50px; border: none; background: transparent; color: white; outline: none;"></span>
-                        <span>목표 완료일: <input type="text" placeholder="MM/DD" style="width: 50px; border: none; background: transparent; color: white; outline: none;"></span>
-                    </div>
-                    <div class="project-progress">
-                        <div class="progress-stage">계획</div>
-                        <div class="progress-stage">리서치</div>
-                        <div class="progress-stage active">디자인</div>
-                        <div class="progress-stage">프로토타입</div>
-                        <div class="progress-stage">테스트</div>
-                        <div class="progress-stage">완료</div>
-                    </div>
-                    <input type="text" class="project-notes" placeholder="주간 진행 상황 메모">
-                </div>
-                
-                <div class="project-item">
-                    <div class="project-name">예비창업자 프로젝트 1</div>
-                    <div class="project-date">
-                        <span>시작일: <input type="text" placeholder="MM/DD" style="width: 50px; border: none; background: transparent; color: white; outline: none;"></span>
-                        <span>목표 완료일: <input type="text" placeholder="MM/DD" style="width: 50px; border: none; background: transparent; color: white; outline: none;"></span>
-                    </div>
-                    <div class="project-progress">
-                        <div class="progress-stage active">계획</div>
-                        <div class="progress-stage">리서치</div>
-                        <div class="progress-stage">디자인</div>
-                        <div class="progress-stage">프로토타입</div>
-                        <div class="progress-stage">테스트</div>
-                        <div class="progress-stage">완료</div>
-                    </div>
-                    <input type="text" class="project-notes" placeholder="주간 진행 상황 메모">
-                </div>
-                
-                <div class="project-item">
-                    <div class="project-name">예비창업자 프로젝트 2</div>
-                    <div class="project-date">
-                        <span>시작일: <input type="text" placeholder="MM/DD" style="width: 50px; border: none; background: transparent; color: white; outline: none;"></span>
-                        <span>목표 완료일: <input type="text" placeholder="MM/DD" style="width: 50px; border: none; background: transparent; color: white; outline: none;"></span>
-                    </div>
-                    <div class="project-progress">
-                        <div class="progress-stage">계획</div>
-                        <div class="progress-stage">리서치</div>
-                        
+</body>
+</html>
